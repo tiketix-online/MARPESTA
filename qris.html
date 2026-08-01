@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran - SIANTAR QRIS RUN 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; }
+        .input-style {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: white;
+            transition: 0.2s;
+        }
+        .input-style:focus { outline: none; border-color: #fbbf24; background: #0f172a; }
+        .file-input::file-selector-button {
+            background: #fbbf24;
+            color: #001f3f;
+            font-weight: bold;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            margin-right: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .file-input::file-selector-button:hover {
+            background: #f59e0b;
+        }
+        /* Animasi Waktu Mundur */
+        .timer-red {
+            color: #ef4444 !important;
+            animation: blinker 1s linear infinite;
+        }
+        @keyframes blinker { 50% { opacity: 0.5; } }
+    </style>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex flex-col items-center py-10 px-4">
+
+    <div class="max-w-5xl w-full bg-slate-800/50 backdrop-blur border border-slate-700 rounded-2xl shadow-2xl overflow-hidden">
+        
+        <div class="bg-blue-600 p-6 text-center">
+            <h1 class="text-2xl md:text-3xl font-bold">PEMBAYARAN & UPLOAD BUKTI</h1>
+            <p class="text-blue-100 text-sm mt-1">Selesaikan pembayaran QRIS dan unggah bukti transaksi</p>
+        </div>
+
+        <div class="p-6 md:p-10 grid md:grid-cols-2 gap-10">
+            
+            <!-- Kolom Kiri: Data Peserta -->
+            <div>
+                <h2 class="text-xl font-bold text-yellow-400 mb-6 border-b border-slate-700 pb-2">Data Peserta</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm text-gray-300 mb-1">Nama Lengkap (Sesuai KTP)</label>
+                        <input type="text" class="input-style" placeholder="Masukkan nama lengkap">
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm text-gray-300 mb-1">Email Aktif</label>
+                            <input type="email" class="input-style" placeholder="email@domain.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-300 mb-1">No. WhatsApp</label>
+                            <input type="tel" class="input-style" placeholder="08xxxx">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-300 mb-1">Kategori Lomba</label>
+                        <select class="input-style">
+                            <option value="" disabled selected>-- Pilih Kategori --</option>
+                            <option>Umum 5K</option>
+                            <option>Umum 10K</option>
+                            <option>Master 5K (≥45 Th)</option>
+                            <option>Master 10K (≥45 Th)</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm text-gray-300 mb-1">Ukuran Jersey</label>
+                            <select class="input-style">
+                                <option value="" disabled selected>-- Pilih --</option>
+                                <option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-300 mb-1">Nomor KTP</label>
+                            <input type="text" class="input-style" placeholder="16 Digit KTP">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kolom Kanan: Timer, QRIS & Upload -->
+            <div class="bg-slate-900 border border-yellow-500/30 rounded-xl p-6 flex flex-col items-center text-center shadow-inner">
+                
+                <!-- Timer Hitung Mundur -->
+                <div class="mb-4">
+                    <p class="text-sm text-gray-400 mb-1">Sisa Waktu Pembayaran:</p>
+                    <div id="timer" class="text-4xl font-black text-yellow-400 tracking-widest">03:00</div>
+                </div>
+
+                <h2 class="text-lg font-bold text-yellow-400 mb-3">SCAN QRIS</h2>
+                
+                <div class="bg-white p-3 rounded-xl mb-4 shadow-lg">
+                    <img src="qris-pesta.png" alt="QRIS Pesta" class="w-44 h-44 object-contain">
+                </div>
+
+                <div class="bg-red-900/40 border border-red-500 rounded-lg p-4 mb-6 w-full">
+                    <p class="text-red-300 font-bold text-sm mb-2">⚠️ ARAHAN PENTING:</p>
+                    <p class="text-white text-sm mb-2">Bayar sebesar <strong>Rp. 17.845</strong></p>
+                    <p class="text-yellow-400 font-bold text-base">WAJIB BAYAR 5 KALI (X5)</p>
+                </div>
+
+                <!-- Upload Wajib 5 File -->
+                <div class="w-full text-left mb-6">
+                    <label class="block text-sm text-gray-300 mb-2 font-bold">Upload Bukti Pembayaran (Wajib 5 Foto/Screenshot):</label>
+                    <div class="space-y-2">
+                        <input type="file" class="input-style file-input text-sm" accept="image/*">
+                        <input type="file" class="input-style file-input text-sm" accept="image/*">
+                        <input type="file" class="input-style file-input text-sm" accept="image/*">
+                        <input type="file" class="input-style file-input text-sm" accept="image/*">
+                        <input type="file" class="input-style file-input text-sm" accept="image/*">
+                    </div>
+                </div>
+
+                <p class="text-xs text-gray-400 mb-4">Pastikan 5 file bukti transfer telah diunggah sebelum klik daftar.</p>
+            </div>
+        </div>
+
+        <!-- Tombol Submit -->
+        <div class="p-6 bg-slate-800 border-t border-slate-700 text-center">
+            <button id="btnDaftar" onclick="validateAndRedirect()" class="inline-block bg-yellow-400 hover:bg-yellow-300 text-blue-900 font-bold text-lg py-4 px-12 rounded-full shadow-xl transition transform hover:scale-105 cursor-pointer">
+                DAFTAR SEKARANG ➔
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Script Timer 3 Menit (180 Detik)
+        let timeLeft = 180;
+        const timerElement = document.getElementById('timer');
+
+        const countdown = setInterval(() => {
+            timeLeft--;
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            
+            // Format tampilan jadi 00:00
+            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            // Jika waktu 10 detik ke bawah, warna berubah merah dan berkedip
+            if (timeLeft <= 10) {
+                timerElement.classList.add('timer-red');
+            }
+
+            // Jika waktu habis
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                timerElement.textContent = "WAKTU HABIS";
+                timerElement.classList.add('text-red-500');
+                document.getElementById('btnDaftar').disabled = true; // Matikan tombol
+                document.getElementById('btnDaftar').classList.remove('hover:scale-105', 'bg-yellow-400', 'hover:bg-yellow-300');
+                document.getElementById('btnDaftar').classList.add('bg-gray-500', 'cursor-not-allowed');
+                alert('Waktu pembayaran habis! Silakan muat ulang halaman.');
+            }
+        }, 1000);
+
+        // Script Validasi Upload 5 File
+        function validateAndRedirect() {
+            // Cek apakah 5 file sudah dipilih
+            const fileInputs = document.querySelectorAll('.file-input');
+            let uploadedFiles = 0;
+
+            fileInputs.forEach(input => {
+                if(input.files.length > 0) {
+                    uploadedFiles++;
+                }
+            });
+
+            if(uploadedFiles < 5) {
+                alert('Wajib upload 5 file bukti pembayaran (X5 transaksi)!');
+                return false;
+            }
+
+            // Jika validasi terpenuhi, redirect ke pending.html
+            window.location.href = 'pending.html';
+        }
+    </script>
+
+</body>
+</html>
